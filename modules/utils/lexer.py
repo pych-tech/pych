@@ -1,3 +1,12 @@
+from dataclasses import dataclass, field
+
+
+@dataclass(frozen=True)
+class Token:
+    token_value: str
+    token_type: str = field(default_factory="UNKONWN")
+
+
 class Lexer:
 
     def __init__(self) -> None:
@@ -37,9 +46,9 @@ class Lexer:
             ' ': 'SPACE'
         }
 
-    def lex(self, string: str) -> list[tuple[str, str]]:
+    def lex(self, string: str) -> list[Token]:
         evalutated_token_stream: str = ""
-        token_map: list[tuple[str, str]] = []
+        token_map: list[Token] = []
         is_integer: bool = False
         is_decimal: bool = False
         is_string_token: bool = False
@@ -72,8 +81,8 @@ class Lexer:
                         for token_item in evalutated_token_stream:
                             token_stream+=token_item
                         
-                        token_map.append((token_stream, 'STRING'))
-                        token_map.append((token, token_property))
+                        token_map.append(Token(token_stream, 'STRING'))
+                        token_map.append(Token(token, token_property))
 
                         is_string_token = False
                         evalutated_token_stream = ""
@@ -89,8 +98,8 @@ class Lexer:
                         for token_item in evalutated_token_stream:
                             token_stream+=token_item
                         
-                        token_map.append((token_stream, 'NUMBER'))
-                        token_map.append((token, token_property))
+                        token_map.append(Token(token_stream, 'NUMBER'))
+                        token_map.append(Token(token, token_property))
                         
                         evalutated_token_stream = ""
                         is_decimal = False
@@ -101,14 +110,20 @@ class Lexer:
                     for token_item in evalutated_token_stream:
                         token_stream+=token_item
                     
-                    token_map.append((token_stream, 'FLOAT'))
-                    token_map.append((token, token_property))
+                    token_map.append(
+                        Token(token_stream, 'FLOAT')
+                    )
+                    token_map.append(
+                        Token(token, token_property)
+                    )
                     
                     is_decimal = False
                     evalutated_token_stream = ""
                 
                 else:
-                    token_map.append((token, token_property))
+                    token_map.append(
+                        Token(token, token_property)
+                    )
                     
                     is_integer: bool = False
                     is_decimal: bool = False
@@ -120,18 +135,29 @@ class Lexer:
                 token_stream+=token_item
 
             if is_decimal:
-                token_map.append((token_stream, 'FLOAT'))
+                token_map.append(
+                    Token(token_stream, 'FLOAT')
+                )
 
             elif is_string_token:
-                token_map.append((token_stream, 'STRING'))
+                token_map.append(
+                    Token(token_stream, 'STRING')
+                )
 
             elif is_integer:
-                token_map.append((token_stream, 'NUMBER'))
+                token_map.append(
+                    Token(token_stream, 'NUMBER')
+                )
 
             else:
-                token_map.append((token, 'UNKNOWN'))
+                token_map.append(
+                    Token(token, 'UNKNOWN')
+                )
 
             evalutated_token_stream = ""
 
-        token_map[0] = (token_map[0][0], 'STREAM-IDENTIFIER')
+        token_map[0] = Token(
+            token_map[0].token_value,
+            'STREAM-IDENTIFIER'
+        )
         return token_map

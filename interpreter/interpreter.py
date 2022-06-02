@@ -8,8 +8,7 @@ class Interpreter:
         try:
             while True:
                 string_stream = input("prompt> ")
-                stream  = Lexer().lex(string_stream)
-                if stream[0][0].lower() == "exit":
+                if Lexer().lex(string_stream)[0].token_value.lower() == "exit":
                     break
         except KeyboardInterrupt:
             self.start()
