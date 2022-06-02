@@ -1,12 +1,10 @@
-def isfloat(self)->bool:
-    ssplit = self.split('.')
-    length: int = len(ssplit)
-    FloatList: list = []
+def isfloat(string: str)->bool:
+    str_split = string.split('.')
+    length: int = len(str_split)
     if 0 < length <= 2:
-        for x in ssplit:
-            FloatList.append(x.isdecimal())
-        if False in FloatList:
-            return False
+        for x in str_split:
+            if not x.isdecimal():
+                return False
         else:
             return True
     else:
