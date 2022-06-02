@@ -1,18 +1,19 @@
 from sys import exit
-from modules.utils.lexer import Lexer
+from argparse import ArgumentParser
+from interpreter.interpreter import Interpreter
 
-def main() -> int:
-    try:
-        while True:
-            string_stream = input("prompt> ")
-            stream = Lexer().lex(string_stream)
-            if stream[0][0].lower() == "exit":
-                break
-    except KeyboardInterrupt:
-        main()
-    except EOFError:
-        return 0
-    return 0
+parser = ArgumentParser()
 
-if __name__ == "__main__":
-    exit(main())
+parser.add_argument("-i", "--interactive",
+    help="start the interactive session",
+    action="store_true"
+)
+
+args = parser.parse_args()
+
+if __name__ == '__main__':
+    if args.interactive:
+        exit(Interpreter().start())
+    else:
+        print("non interactive sessions not yet implemented")
+        exit(1)
