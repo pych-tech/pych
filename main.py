@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     if args.interactive:
-        exit(Interpreter().start())
+        exit(Interpreter(kbd_count_break=True).start())
     else:
         print("non interactive sessions not yet implemented")
         exit(1)

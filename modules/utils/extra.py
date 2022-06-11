@@ -1,4 +1,4 @@
-def isfloat(string: str)->bool:
+def isfloat(string: str) -> bool:
     str_split = string.split('.')
     length: int = len(str_split)
     if 0 < length <= 2:
@@ -9,3 +9,7 @@ def isfloat(string: str)->bool:
             return True
     else:
         return False
+
+class TerminateSession(SystemExit):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
