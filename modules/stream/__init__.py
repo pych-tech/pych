@@ -34,7 +34,10 @@ def __validate_type(value: Any, object_type, name: str | None = None) -> bool:
 
 
 def evaluate(
-    token_stream: list[Token] | None = None, string_stream: str | None = None
+    token_stream: list[Token] | None = None,
+    string_stream: str | None = None,
+    command_out: CommandDone | None = None,
+    show_command_stream: bool = False,
 ) -> CommandDone:
     if not (type(string_stream) is str or __validate_type(token_stream, list[Token])):
         required_type, found_type = (
@@ -68,11 +71,17 @@ def evaluate(
             command_stream = None
 
     if command_stream is not None:
-        print(command_stream)
-        return Creator(command_stream.name).run(
-            command_stream.arguments,
-            CommandDone(command_name=command_stream.name, new_env_variables={}),
-        )
+        if show_command_stream:
+            print(command_stream)
+        if command_out is None:
+            return Creator(command_stream.name).run(
+                command_stream.arguments,
+                CommandDone(command_name=command_stream.name, new_env_variables={}),
+            )
+        else:
+            return Creator(command_stream.name).run(
+                command_stream.arguments, command_out
+            )
     else:
         cmd_out = CommandDone(command_name="", new_env_variables={})
         cmd_out.EXIT_CODE = 127
