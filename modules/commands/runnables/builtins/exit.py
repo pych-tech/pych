@@ -1,9 +1,7 @@
-import argparse
 from argparse import ArgumentParser
 
+from modules.commands.runnables.utils import Executable
 from modules.commands.utils.returnable import CommandDone
-
-from .. import Executable
 
 
 class ExitCommand(Executable):

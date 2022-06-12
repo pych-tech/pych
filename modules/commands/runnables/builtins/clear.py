@@ -1,6 +1,5 @@
+from modules.commands.runnables.utils import Executable
 from modules.commands.utils.returnable import CommandDone
-
-from .. import Executable
 
 
 class ClearCommand(Executable):

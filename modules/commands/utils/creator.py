@@ -1,5 +1,5 @@
-from ..runnables.utils import Commands
-from .returnable import CommandDone
+from modules.commands.runnables.utils import Commands
+from modules.commands.utils.returnable import CommandDone
 
 
 class Creator:
