@@ -13,3 +13,8 @@ class Token:
 
     token_value: str
     token_type: str = field(default="UNKNOWN")
+
+
+@dataclass(slots=True)
+class VariableProperties:
+    value: str
