@@ -1,19 +1,26 @@
-from sys import exit
 from argparse import ArgumentParser
+from sys import exit
+
 from interpreter.interpreter import Interpreter
+from modules.utils.syntax_analyzer import postfix_generation
 
-parser = ArgumentParser()
 
-parser.add_argument("-i", "--interactive",
-    help="start the interactive session",
-    action="store_true"
-)
+def main() -> int:
+    print(postfix_generation("let !(dyn) !(mut) Token = (($&Token)^Expression^Data) "))
+    parser = ArgumentParser()
 
-args = parser.parse_args()
+    parser.add_argument(
+        "-i", "--interactive", help="start the interactive session", action="store_true"
+    )
 
-if __name__ == '__main__':
+    args = parser.parse_args()
+
     if args.interactive:
-        exit(Interpreter(kbd_count_break=True).start())
+        return Interpreter(kbd_count_break=True).start()
     else:
         print("non interactive sessions not yet implemented")
-        exit(1)
+        return 1
+
+
+if __name__ == "__main__":
+    exit(main())
